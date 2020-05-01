@@ -1,3 +1,14 @@
+package es;
+import es.AdminAPI;
+
+import org.elasticsearch.action.get.GetResponse;
+import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.common.transport.TransportAddress;
+import org.elasticsearch.transport.client.PreBuiltTransportClient;
+
+import java.net.InetAddress;
+
 /**
  * @program: EHRelasticsearch
  * @description: 使用java操作elasicsearch
@@ -5,13 +16,6 @@
  * @create: 2020-04-30 18:00
  * @email: 1557679224@qq.com
  */
-import java.net.InetAddress;
-
-import org.elasticsearch.action.get.GetResponse;
-import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.transport. TransportAddress;
-import org.elasticsearch.transport.client.PreBuiltTransportClient;
 
 public class ControlEs {
     public static void main(String[] args) {

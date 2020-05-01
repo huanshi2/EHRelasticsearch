@@ -1,6 +1,4 @@
-import java.io.IOException;
-import java.net.InetAddress;
-import java.util.HashMap;
+package es;
 
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
 import org.elasticsearch.client.AdminClient;
@@ -13,6 +11,11 @@ import org.elasticsearch.common.xcontent.XContentFactory;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.io.IOException;
+import java.net.InetAddress;
+import java.util.HashMap;
+
 /**
  * @program: EHRelasticsearch
  * @description: 使用java api创建索引Index、类型Type、以及指定字段，是否创建索引，是否存储，是否即分词，又建立索引（analyzed）、是否建索引不分词（not_analyzed）等等
@@ -29,17 +32,14 @@ public class AdminAPI {
     @SuppressWarnings("resource")
     @Before
     public void init() throws Exception {
-        // 设置集群名称biehl01
+        // 设置集群名称 elasticsearch-cluster
         Settings settings = Settings.builder().put("cluster.name", "elasticsearch-cluster")
-                // 自动感知的功能(可以通过当前指定的节点获取所有es节点的信息)
+                // 自动嗅探整个集群的状态，把集群中其他ES节点的ip添加到本地的客户端列表中
                 .put("client.transport.sniff", true).build();
         // 创建client
         client = new PreBuiltTransportClient(settings).addTransportAddresses(
-                // new InetSocketTransportAddress(InetAddress.getByName("192.168.110.133"),
-                // 9300),
-                // new InetSocketTransportAddress(InetAddress.getByName("192.168.110.133"),
-                // 9300),
                 // 建议指定2个及其以上的节点。
+                //节点个数由你安装的节点决定
                 new TransportAddress(InetAddress.getByName("localhost"), 9300));
     }
 
@@ -61,10 +61,10 @@ public class AdminAPI {
                 // 配置索引参数
                 .setSettings(
                         // 参数配置器
-                        Settings.builder()// 指定索引分区的数量。shards分区
+                        Settings.builder()// 指定索引分区的数量。shards分区，
                                 .put("index.number_of_shards", 1)
                                 // 指定索引副本的数量(注意：不包括本身,如果设置数据存储副本为1,实际上数据存储了2份)
-                                // replicas副本
+                                // 由于本机只要单节点，这里分片设置为0，不保存副本
                                 .put("index.number_of_replicas", 0))
                 // 真正执行
                 .get();
@@ -85,9 +85,9 @@ public class AdminAPI {
     public void elasticsearchSettingsMappings() throws IOException {
         // 1:settings
         HashMap<String, Object> settings_map = new HashMap<String, Object>(2);
-        // shards分区的数量4
+        // shards分区的数量1
         settings_map.put("number_of_shards", 1);
-        // 副本的数量1
+        // 副本的数量0
         settings_map.put("number_of_replicas", 0);
 
         // 2:mappings(映射、schema)
@@ -105,7 +105,7 @@ public class AdminAPI {
                 .field("store", "true").endObject()
                 // name属性
                 .startObject("name")
-                // string类型
+                // text类型
                 .field("type", "text")
                 // 在文档中存储
                 .field("store", "true")
@@ -119,25 +119,13 @@ public class AdminAPI {
         prepareCreate.setSettings(settings_map).addMapping("xiaomi", builder).get();
     }
 
-    /**
-     * index这个属性,no代表不建索引
-     *
-     * not_analyzed,建索引不分词
-     *
-     * analyzed 即分词,又建立索引
-     *
-     * expected [no],[not_analyzed] or [analyzed]。即可以选择三者任意一个值
-     *
-     * @throws IOException
-     */
-
     @Test
     public void elasticsearchSettingsPlayerMappings() throws IOException {
         // 1:settings
         HashMap<String, Object> settings_map = new HashMap<String, Object>(2);
-        // 分区的数量4
+        // 分区的数量1
         settings_map.put("number_of_shards", 1);
-        // 副本的数量1
+        // 副本的数量0
         settings_map.put("number_of_replicas", 0);
 
         // 2:mappings
