@@ -79,7 +79,7 @@ public class AddEs {
      */
     @Test
     public void elasticsearchCreate() throws IOException {
-        HashMap<String, Object> settings_map = new HashMap<String, Object>(2);
+        HashMap<String, Object> settings_map = new HashMap<>(2);
         // shards分区的数量1
         settings_map.put("number_of_shards", 1);
         // 副本的数量0
@@ -404,6 +404,7 @@ public class AddEs {
             System.out.println(team + ": " + max);
         }
     }
+
 
     /**
      * select team, avg(age) as avg_age, sum(salary) as total_salary from player

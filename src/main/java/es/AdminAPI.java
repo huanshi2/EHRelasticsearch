@@ -84,7 +84,7 @@ public class AdminAPI {
     @Test
     public void elasticsearchSettingsMappings() throws IOException {
         // 1:settings
-        HashMap<String, Object> settings_map = new HashMap<String, Object>(2);
+        HashMap<String, Object> settings_map = new HashMap<>(2);
         // shards分区的数量1
         settings_map.put("number_of_shards", 1);
         // 副本的数量0
@@ -122,7 +122,7 @@ public class AdminAPI {
     @Test
     public void elasticsearchSettingsPlayerMappings() throws IOException {
         // 1:settings
-        HashMap<String, Object> settings_map = new HashMap<String, Object>(2);
+        HashMap<String, Object> settings_map = new HashMap<>(2);
         // 分区的数量1
         settings_map.put("number_of_shards", 1);
         // 副本的数量0
@@ -149,9 +149,7 @@ public class AdminAPI {
                 // 即分词,又建立索引、在文档中存储、
                 .startObject("addr").field("type", "text").field("store", "true").field("index", "true")
                 .field("analyzer", "ik_smart").endObject()
-
                 .endObject()
-
                 .endObject();
 
         CreateIndexRequestBuilder prepareCreate = client.admin().indices().prepareCreate("player");
