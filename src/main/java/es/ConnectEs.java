@@ -17,6 +17,7 @@ import java.net.InetAddress;
  */
 
 public class ConnectEs {
+
     public static void main(String[] args) {
         try {
             // 设置集群名称elasticsearch-cluster,Settings设置es的集群名称,使用的设计模式，链式设计模式、build设计模式。

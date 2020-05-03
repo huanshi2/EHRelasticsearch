@@ -11,12 +11,12 @@ import java.net.InetAddress;
 
 /**
  * @program: EHRelasticsearch
- * @description: 删除elasticsearch中的数据
+ * @description: 修改，更新elasticsearch中的数据
  * @author: huanshi2
- * @create: 2020-05-03 16:50
+ * @create: 2020-05-03 19:56
  * @email: 1557679224@qq.com
  */
-public class DelectEsdata {
+public class addjustEs {
     private TransportClient client = null;
 
     // 在所有的测试方法之前执行连接elasticsearch操作
@@ -28,7 +28,7 @@ public class DelectEsdata {
         * @Param: []
         * @Return: void
         * @Author: huanshi2
-        * @Date: 2020/5/3 20:18
+        * @Date: 2020/5/3 20:17
         */
         // 设置集群名称 elasticsearch-cluster
         Settings settings = Settings.builder().put("cluster.name", "elasticsearch-cluster")
@@ -46,21 +46,5 @@ public class DelectEsdata {
     public void closeClient() {
         client.close();
     }
-    
-    /*
-     * 功能描述: <br>
-     * 〈〉
-     * @Param: 
-     * @Return: 
-     * @Author: huanshi2
-     * @Date: 2020/5/3 20:02
-     */
-
-
-
-
-
-
-
 
 }

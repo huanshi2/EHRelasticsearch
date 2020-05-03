@@ -31,9 +31,16 @@ import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
  * @create: 2020-05-03 16:51
  * @email: 1557679224@qq.com
  */
-public class AdateEs {
-    private TransportClient client = null;
 
+public class AdateEs {
+    /*
+    * 功能描述: 连接elasticsearch
+    * @Param:
+    * @Return:
+    * @Author: huanshi2
+    * @Date: 2020/5/3 20:14
+    */
+    private TransportClient client = null;
     // 在所有的测试方法之前执行连接elasticsearch操作
     @SuppressWarnings("resource")
     @Before
@@ -54,14 +61,16 @@ public class AdateEs {
         client.close();
     }
 
-    /*
-     * @Author huanshi2
-     * @Description //测试向es中添加数据
-     * @Date 2020/5/3 16:55
-     * @email 1557679224@qq.com
-     **/
     @Test
     public void createIndexWithSettings() {
+        /*
+         * 功能描述: 测试向es中添加数据
+         * @Param: []
+         * @Return: void
+         * @Author: huanshi2
+         * @Date: 2020/5/3 20:13
+         */
+
         AdminClient admin = client.admin();
         // 使用Admin API对索引进行操作
         IndicesAdminClient indices = admin.indices();
@@ -79,14 +88,15 @@ public class AdateEs {
                 .get();
     }
 
-    /*
-     * @Author huanshi2
-     * @Description //向索引中添加Mapping和field
-     * @Date 2020/5/3 17:13
-     * @email 1557679224@qq.com
-     **/
     @Test
     public void elasticsearchSettingsPlayerMappings() throws IOException {
+        /*
+         * 功能描述: 向索引中添加Mapping和field
+         * @Param:
+         * @Return:
+         * @Author: huanshi2
+         * @Date: 2020/5/3 20:13
+         */
 
         HashMap<String, Object> settings_map = new HashMap<>(2);
         // shards分区的数量1
@@ -122,14 +132,16 @@ public class AdateEs {
         prepareCreate.setSettings(settings_map).addMapping("basketball", builder).get();
     }
 
-    /*
-     * @Author huanshi2
-     * @Description //创建一个索引并添加数据
-     * @Date 2020/5/3 18:11
-     * @email 1557679224@qq.com
-     **/
     @Test
     public void elasticsearchCreate() throws IOException {
+        /*
+        * 功能描述: 创建一个索引并添加数据
+        * @Param: []
+        * @Return: void
+        * @Author: huanshi2
+        * @Date: 2020/5/3 20:15
+        */
+
         HashMap<String, Object> settings_map = new HashMap<>(2);
         // shards分区的数量1
         settings_map.put("number_of_shards", 1);
@@ -148,34 +160,37 @@ public class AdateEs {
         System.out.println(response.toString());
     }
 
-    /*
-     * @Author huanshi2
-     * @Description //插入多条信息
-     * @Date 2020/5/3 18:33
-     * @email 1557679224@qq.com
-     **/
     @Test
     public void elasticsearchGet() throws IOException {
+        /*
+         * 功能描述: 查找单条信息
+         * @Param:
+         * @Return:
+         * @Author: huanshi2
+         * @Date: 2020/5/3 20:16
+         */
         GetResponse response = client.prepareGet("student", "classone", "1").get();
         System.out.println(response.getSourceAsString());
     }
 
-    /*
-     * @Author huanshi2
-     * @Description //插入多条数据
-     * @Date 2020/5/3 18:55
-     * @email 1557679224@qq.com
-     **/
     @Test
     public void elasticsearchInsert() throws IOException {
-        IndexResponse response1 = client.prepareIndex("student", "classone", "2")
-                .setSource(jsonBuilder().startObject().field("name", "lisi").field("sex", "man")
-                        .field("birthday", new Date()).field("age", 22).field("message", "using java to control Elasticsearch")
+        /*
+        * 功能描述: 插入多条数据
+        * @Param: []
+        * @Return: void
+        * @Author: huanshi2
+        * @Date: 2020/5/3 20:16
+        */
+
+        IndexResponse response1 = client.prepareIndex("student", "classone", "4")
+                .setSource(jsonBuilder().startObject().field("name", "liuliu").field("sex", "man")
+                        .field("birthday", new Date()).field("age", 24).field("message", "using java to control Elasticsearch")
                         .endObject())
                 .get();
-        IndexResponse response2 = client.prepareIndex("student", "classone", "3")
-                .setSource(jsonBuilder().startObject().field("name", "wangwu").field("sex", "man")
-                        .field("birthday", new Date()).field("age", 23).field("message", "using java to control Elasticsearch")
+        IndexResponse response2 = client.prepareIndex("student", "classone", "5")
+                .setSource(jsonBuilder().startObject().field("name", "zhaoqi").field("sex", "man")
+                        .field("birthday", new Date()).field("age", 25).field("message", "using java to control Elasticsearch")
                         .endObject())
                 .get();
 
@@ -183,14 +198,15 @@ public class AdateEs {
         System.out.println(response1.toString());
     }
 
-    /*
-     * @Author huanshi2
-     * @Description //插入多条数据并遍历打印
-     * @Date 2020/5/3 18:38
-     * @email 1557679224@qq.com
-     **/
     @Test
     public void elasticsearchMultiGet() throws IOException {
+        /*
+        * 功能描述: 插入多条数据并遍历打印
+        * @Param: []
+        * @Return: void
+        * @Author: huanshi2
+        * @Date: 2020/5/3 20:17
+        */
         IndexResponse response1 = client.prepareIndex("student", "classone", "2")
                 .setSource(jsonBuilder().startObject().field("name", "lisi").field("sex", "man")
                         .field("birthday", new Date()).field("age", 22).field("message", "using java to control Elasticsearch")
@@ -216,6 +232,5 @@ public class AdateEs {
             }
         }
     }
-
 
 }
