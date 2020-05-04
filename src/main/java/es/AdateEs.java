@@ -148,13 +148,13 @@ public class AdateEs {
         // 副本的数量0
         settings_map.put("number_of_replicas", 0);
 
-        CreateIndexRequestBuilder prepareCreate = client.admin().indices().prepareCreate("student");
+        CreateIndexRequestBuilder prepareCreate = client.admin().indices().prepareCreate("teacher");
 
         prepareCreate.setSettings(settings_map).get();
 
-        IndexResponse response = client.prepareIndex("student", "classone", "1")
-                .setSource(jsonBuilder().startObject().field("name", "zhangsan").field("sex", "man")
-                        .field("birthday", new Date()).field("age", 21).field("message", "using java to control Elasticsearch")
+        IndexResponse response = client.prepareIndex("teacher", "classtwo", "11")
+                .setSource(jsonBuilder().startObject().field("name", "华雄").field("sex", "man")
+                        .field("deadday", new Date()).field("age", 30).field("message", "using java to control Elasticsearch")
                         .endObject())
                 .get();
         System.out.println(response.toString());
@@ -183,9 +183,9 @@ public class AdateEs {
         * @Date: 2020/5/3 20:16
         */
 
-        IndexResponse response1 = client.prepareIndex("student", "classone", "4")
-                .setSource(jsonBuilder().startObject().field("name", "liuliu").field("sex", "man")
-                        .field("birthday", new Date()).field("age", 24).field("message", "using java to control Elasticsearch")
+        IndexResponse response1 = client.prepareIndex("student", "classone", "6")
+                .setSource(jsonBuilder().startObject().field("name", "王八").field("sex", "man")
+                        .field("birthday", new Date()).field("age", 26).field("message", "using java to control Elasticsearch")
                         .endObject())
                 .get();
         IndexResponse response2 = client.prepareIndex("student", "classone", "5")
@@ -231,6 +231,26 @@ public class AdateEs {
                 System.out.println(json);
             }
         }
+    }
+
+    @Test
+    public void elasticsearchAddPlayer() throws IOException {
+        /*
+        * @description: 向指定索引指定Type的id的信息添加信息
+        * @Param: []
+        * @Return: void
+        * @Author: huanshi2
+        * @Date: 2020/5/4 14:43
+        */
+        IndexResponse response = client.prepareIndex("student", "classone", "10")
+                .setSource(jsonBuilder().startObject()
+                        .field("name", "关羽")
+                        .field("birthday", new Date())
+                        .field("age", 27)
+                        .field("message", "win9斩华雄")
+                        .endObject())
+                .get();
+        System.out.println(response);
     }
 
 }
