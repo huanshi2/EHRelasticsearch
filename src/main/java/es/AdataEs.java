@@ -32,7 +32,7 @@ import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
  * @email: 1557679224@qq.com
  */
 
-public class AdateEs {
+public class AdataEs {
     /*
     * 功能描述: 连接elasticsearch
     * @Param:
