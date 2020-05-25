@@ -80,6 +80,45 @@ public class RanQuery {
 
     }
 
+    @Test
+    public void MohuQuery() throws IOException {
+
+        SearchRequest searchRequest = new SearchRequest();
+        // 设置request要搜索的索引和类型
+        searchRequest.indices("school").types("_doc");
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        searchSourceBuilder.sort("age", SortOrder.ASC);
+
+        RangeQueryBuilder rangeQueryBuilder = QueryBuilders
+                .rangeQuery("age")
+                .from(60).to(100);
+
+        searchSourceBuilder.query(rangeQueryBuilder);
+
+        try {
+            searchRequest.source(searchSourceBuilder);
+            SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+
+            System.out.println("searchRequest = " + searchRequest);
+            System.out.println("searchSourceBuilder = " + searchSourceBuilder);
+            System.out.println("searchResponse = " + searchResponse);
+
+            //查询响应中取出结果
+            SearchHits hits = searchResponse.getHits();
+            SearchHit[] searchHits = hits.getHits();
+
+            for (SearchHit hit : searchHits) {
+                System.out.println(hit.getSourceAsString());
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+
 
 
 }
